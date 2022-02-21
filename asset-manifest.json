@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/math-protal-web3/static/css/main.815e6772.chunk.css",
+    "main.js": "/math-protal-web3/static/js/main.1b905d11.chunk.js",
+    "main.js.map": "/math-protal-web3/static/js/main.1b905d11.chunk.js.map",
+    "runtime-main.js": "/math-protal-web3/static/js/runtime-main.48749e06.js",
+    "runtime-main.js.map": "/math-protal-web3/static/js/runtime-main.48749e06.js.map",
+    "static/js/2.49c1c2ec.chunk.js": "/math-protal-web3/static/js/2.49c1c2ec.chunk.js",
+    "static/js/2.49c1c2ec.chunk.js.map": "/math-protal-web3/static/js/2.49c1c2ec.chunk.js.map",
+    "index.html": "/math-protal-web3/index.html",
+    "precache-manifest.99c55751f64886634944ab7fa9e24763.js": "/math-protal-web3/precache-manifest.99c55751f64886634944ab7fa9e24763.js",
+    "service-worker.js": "/math-protal-web3/service-worker.js",
+    "static/css/main.815e6772.chunk.css.map": "/math-protal-web3/static/css/main.815e6772.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.48749e06.js",
+    "static/js/2.49c1c2ec.chunk.js",
+    "static/css/main.815e6772.chunk.css",
+    "static/js/main.1b905d11.chunk.js"
+  ]
+}
