@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { ethers } from "ethers"; //ethers is a library that helps our frontend talk to our contract
 import abi from "./utils/MathPortal.json";
-var randomMathQuestion = require('random-math-question');
+import BeatLoader from "react-spinners/BeatLoader";
+import { css, jsx } from '@emotion/react'
 
+
+var randomMathQuestion = require('random-math-question');
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
   /*
    * All state property to store all Maths
    */
   const [allMaths, setAllMaths] = useState([]);
+  const [loading, setLoading] = useState('false');
   const [mathQuestion, setMathQuestion] = useState("");
   const [mathAnswer, setMathAnswer] = useState("");
   const [questionAnswer, setQuestionAnswer] = useState("")
@@ -18,6 +22,12 @@ const App = () => {
   //what's an ABI? Much earlier I mentioned how when you compile a contract, it creates a bunch of files for you under artifacts. An ABI is one of those files.
   const contractABI = abi.abi;
 
+  const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: white;
+  margin-top: 50px;
+  `;
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -90,11 +100,14 @@ const App = () => {
           const mathTxn = await mathPortalContract.math(qna, { gasLimit: 300000 });
           console.log("Mining...", mathTxn.hash);
 
+          setLoading('true');
+
           await mathTxn.wait();
           console.log("Mined -- ", mathTxn.hash);
 
           count = await mathPortalContract.getTotalMath();
           console.log("Retrieved total maths count...", count.toNumber());
+          setLoading('false');
 
           getAllMaths();
         }
@@ -118,7 +131,6 @@ const App = () => {
          * Call the getAllMaths method from your Smart Contract
          */
         const maths = await mathPortalContract.getAllMaths();
-
 
         /*
          * We only need address, timestamp, and message in our UI so let's
@@ -193,7 +205,7 @@ const App = () => {
         </div>
 
         <div className="bio">
-          I am steven and I worked on self-improvement so that's pretty cool right? Connect your Ethereum wallet and do a math question!
+          I am steven and I worked on self-improvement so that's pretty cool right? Connect your Ethereum wallet and do a math question! {loading}
         </div>
 
         {currentAccount && (
@@ -203,15 +215,16 @@ const App = () => {
         )}
 
         {
-          currentAccount ? (<input name="mathArea"
-            className="mathButton"
-            placeholder="What the answer? Check the console for answer."
-            type="text"
-            id="mathAnswer"
-            value={questionAnswer}
-            onChange={e => setQuestionAnswer(e.target.value)} />) : null
+          currentAccount && loading === 'false' ? (
+            <input name="mathArea"
+              className="mathButton"
+              placeholder="What the answer? Check the console for answer."
+              type="text"
+              id="mathAnswer"
+              value={questionAnswer}
+              onChange={e => setQuestionAnswer(e.target.value)} />) : currentAccount && loading === 'true' ?
+            (<p>loading</p>) : null
         }
-
 
         {currentAccount && (
           <button className="mathButton" onClick={math}>
@@ -228,14 +241,19 @@ const App = () => {
           </button>
         )}
 
-        {allMaths.map((math, index) => {
-          return (
-            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
-              <div>Address: {math.address}</div>
-              <div>Time: {math.timestamp.toString()}</div>
-              <div>Message: {math.message}</div>
-            </div>)
-        })}
+        {
+          currentAccount && loading === 'false' ? (
+            <div className="listData">
+              {allMaths.map((math, index) => {
+                return (
+                  <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+                    <div>Address: {math.address}</div>
+                    <div>Time: {math.timestamp.toString()}</div>
+                    <div>Message: {math.message}</div>
+                  </div>)
+              })}
+            </div>
+          ) :  <BeatLoader css={override} size={20} loading={loading} color={"#fff"}  speedMultiplier={1.5} />}
       </div>
     </div>
   );
