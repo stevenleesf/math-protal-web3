@@ -61,6 +61,7 @@ const App = () => {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+      window.location.reload();
     } catch (error) {
       console.log(error)
     }
@@ -195,9 +196,11 @@ const App = () => {
           I am steven and I worked on self-improvement so that's pretty cool right? Connect your Ethereum wallet and do a math question!
         </div>
 
-        <div className="bio">
-          {mathQuestion}
-        </div>
+        {currentAccount && (
+          <div className="bio">
+            {mathQuestion}
+          </div>
+        )}
 
         {
           currentAccount ? (<input name="mathArea"
@@ -209,9 +212,12 @@ const App = () => {
             onChange={e => setQuestionAnswer(e.target.value)} />) : null
         }
 
-        <button className="mathButton" onClick={math}>
-          Math Click
-        </button>
+
+        {currentAccount && (
+          <button className="mathButton" onClick={math}>
+            Math Click
+          </button>
+        )}
 
         {/*
         * If there is no currentAccount render this button
