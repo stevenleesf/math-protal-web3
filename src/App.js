@@ -205,7 +205,7 @@ const App = () => {
         </div>
 
         <div className="bio">
-          I am steven and I worked on self-improvement so that's pretty cool right? Connect your Ethereum wallet and do a math question! {loading}
+          I am steven and I worked on self-improvement so that's pretty cool right? Connect your Ethereum wallet and do a math question! 
         </div>
 
         {currentAccount && (
